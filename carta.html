@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feliz Cumpleaños</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Georgia', serif;
+      background: url('https://www.creativefabrica.com/wp-content/uploads/2023/01/14/Watercolor-Floral-Wallpaper-Graphics-57608963-1.jpg') no-repeat center center fixed;
+      background-size: cover;
+      text-align: center;
+      color: white;
+    }
+
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.3);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 3em;
+      text-shadow: 2px 2px 6px black;
+      margin-bottom: 0.3em;
+    }
+
+    p {
+      font-size: 1.3em;
+      max-width: 700px;
+      text-shadow: 1px 1px 4px black;
+    }
+
+    /* Estilo del botón */
+    .btn {
+      margin-top: 20px;
+      padding: 12px 25px;
+      font-size: 1.1em;
+      border: none;
+      border-radius: 25px;
+      background: #ffcc70;
+      color: black;
+      cursor: pointer;
+      box-shadow: 0px 4px 10px rgba(0,0,0,0.4);
+      transition: transform 0.2s ease-in-out;
+    }
+    .btn:hover {
+      transform: scale(1.08);
+    }
+
+    /* Contenedores de imágenes en las esquinas */
+    .corner {
+      position: absolute;
+      width: 150px;
+      height: 150px;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0px 6px 15px rgba(0,0,0,0.5);
+      transform: rotate(-5deg);
+    }
+    .corner img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* 👈 esto hace que no quede espacio vacío */
+    }
+
+    /* Posiciones */
+    .top-left { top: 30px; left: 40px; transform: rotate(-8deg); }
+    .top-right { top: 30px; right: 40px; transform: rotate(6deg); }
+    .bottom-left { bottom: 30px; left: 40px; transform: rotate(5deg); }
+    .bottom-right { bottom: 30px; right: 40px; transform: rotate(-6deg); }
+  </style>
+</head>
+<body>
+  <div class="overlay">
+    <h1>🎉 Feliiizzz Cumpleañooosss 🎉</h1>
+    <p>
+      Ojalá disfrutes mucho este día tan especial y  
+      que este nuevo año llegue lleno de luz, sonrisas y momentos inolvidables. 🌸
+    </p>
+
+    <!-- Botón para reproducir canción -->
+    <button class="btn" onclick="playSong()">▶ Pincha acá para una sorpresa</button>
+
+    <!-- Audio en MP3 -->
+    <audio id="song">
+      <source src="assets/audio/cardigan.mp3" type="audio/mpeg">
+      Tu navegador no soporta audio HTML5.
+    </audio>
+  </div>
+
+  <!-- Contenedores con imágenes -->
+  <div class="corner top-left">
+    <img src="assets/img/juegoshambre.jpg" alt="Los juegos del hambre">
+  </div>
+  <div class="corner top-right">
+    <img src="assets/img/folklore.webp" alt="Folklore">
+  </div>
+  <div class="corner bottom-left">
+    <img src="assets/img/the100.jpg" alt="The 100">
+  </div>
+  <div class="corner bottom-right">
+    <img src="assets/img/italia.webp" alt="italia">
+  </div>
+
+  <script>
+    function playSong() {
+      const song = document.getElementById("song");
+      song.play();
+    }
+  </script>
+</body>
+</html>
