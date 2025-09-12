@@ -5,19 +5,33 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Feliz Cumpleaños</title>
 
-  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Playfair+Display&display=swap" rel="stylesheet">
+  <!-- Fuentes -->
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
 
   <style>
-    /* --- Mantengo tu fondo y estilos base --- */
+    :root{
+      --corner-size: 200px;
+      --corner-small-size: 120px;
+      --img-cover-large: 110%;
+      --img-cover-small: 110%;
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+    }
+
     body{
-      margin:0;
-      font-family:'Playfair Display', serif;
+      font-family: 'Montserrat', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
       background: url('https://www.todofondos.net/wp-content/uploads/fondos-de-flores-vintage-exzx9q1-0.42-mb-4usky.-wallpaper-de-flores-vintage.jpg') no-repeat center center fixed;
       background-size: cover;
       text-align:center;
       color:white;
-      overflow-x:hidden;
-      overflow-y:hidden;
+      /* permitir scroll si hay necesidad, evita cortes inesperados */
+      overflow-x: hidden;
+      overflow-y: auto;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
     .overlay{
@@ -30,101 +44,144 @@
       padding:20px;
       animation: fadeIn 1.6s ease-in;
       position: relative;
-      z-index: 1;
+      z-index: 2;
+      box-sizing: border-box;
     }
 
     h1{
-      font-family:'Dancing Script', cursive;
+      font-family: 'Merriweather', serif;
       font-size:3.2em;
-      text-shadow: 2px 2px 6px black;
       margin-bottom:0.3em;
-      animation: glow 2s ease-in-out infinite alternate;
+      color: #fffdf6;
       position: relative;
-      z-index: 2;
+      z-index: 3;
+      text-shadow:
+        0 2px 0 rgba(0,0,0,0.6),
+        0 6px 18px rgba(0,0,0,0.45);
+      animation: glowTitle 2s ease-in-out infinite alternate;
+    }
+    @keyframes glowTitle {
+      from {
+        text-shadow:
+          0 2px 0 rgba(0,0,0,0.6),
+          0 6px 18px rgba(0,0,0,0.45),
+          0 0 6px rgba(255,220,115,0.28),
+          0 0 18px rgba(255,200,80,0.12);
+      }
+      to {
+        text-shadow:
+          0 2px 0 rgba(0,0,0,0.6),
+          0 6px 18px rgba(0,0,0,0.45),
+          0 0 12px rgba(255,230,130,0.42),
+          0 0 30px rgba(255,210,90,0.16);
+      }
     }
 
     p{
-      font-size:1.3em;
-      max-width:700px;
-      text-shadow:1px 1px 4px black;
+      font-size:1.2em;
+      max-width:780px;
+      text-shadow:1px 1px 4px rgba(0,0,0,0.6);
       animation: fadeInUp 1.6s ease-in-out;
-      z-index: 2;
+      z-index: 3;
+      margin: 0 20px 12px 20px;
+      line-height:1.5;
+      font-weight:300;
     }
 
     @keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
     @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px)} to { opacity:1; transform: translateY(0)} }
-    @keyframes glow {
-      from { text-shadow: 0 0 10px #ffcc70, 0 0 20px #ffcc70, 2px 2px 6px black; }
-      to   { text-shadow: 0 0 20px #ffd98c, 0 0 40px #ffd98c, 2px 2px 6px black; }
-    }
 
-    /* --- Botón (igual look) --- */
     .btn {
       margin-top: 20px;
-      padding: 12px 25px;
-      font-size: 1.1em;
+      padding: 12px 28px;
+      font-size: 1.05em;
       border: none;
-      border-radius: 25px;
+      border-radius: 28px;
       background: #ffcc70;
-      color: black;
+      color: #1b1b1b;
       cursor: pointer;
-      box-shadow: 0px 4px 10px rgba(0,0,0,0.4);
+      box-shadow: 0px 6px 18px rgba(0,0,0,0.35);
       transition: transform 0.18s ease-in-out, background 0.18s;
-      z-index: 2;
+      z-index: 3;
+      font-weight:600;
     }
-    .btn:hover { transform: scale(1.08); background: #ffd98c; }
+    .btn:hover { transform: scale(1.06); background: #ffd98c; }
 
-    /* --- Esquinas (FIX) ---
-       - .corner = posicionamiento ABSOLUTO (sin transform inicial)
-       - .corner-inner = rotación inicial + animación float aplicada aquí
-       - on :hover escalamos .corner (no cambian sus coords), y pausamos anim.
-       Esto evita que la caja "se corra" al transformar.
-    */
+    /* Contenedores */
     .corner {
       position: absolute;
-      width: 200px;
-      height: 200px;
-      border-radius: 15px;
+      width: var(--corner-size);
+      height: var(--corner-size);
+      border-radius: 16px;
       overflow: hidden;
-      box-shadow: 0px 6px 15px rgba(0,0,0,0.5);
+      box-shadow: 0px 10px 30px rgba(0,0,0,0.45);
       transition: transform 0.28s ease-in-out;
-      z-index: 3;
+      z-index: 4;
       transform-origin: center center;
+      background: transparent;
+    }
+
+    .corner.small {
+      width: var(--corner-small-size);
+      height: var(--corner-small-size);
+      border-radius: 14px;
+      box-shadow: 0px 8px 22px rgba(0,0,0,0.42);
     }
 
     .corner-inner {
-      width:100%; height:100%;
-      transition: transform 0.36s ease;
+      position: relative;
+      width:100%;
+      height:100%;
       display:block;
       animation: floatInner 4s ease-in-out infinite;
+      transform-origin: center center;
+      z-index: 2;
     }
 
-    .corner img { width:100%; height:100%; object-fit: cover; display:block; }
+    /* IMAGEN centrada y con width/height >100% para cubrir rotaciones */
+    .corner img {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: var(--img-cover-large);
+      height: var(--img-cover-large);
+      object-fit: cover;
+      transform-origin: center center;
+      transform: translate(-50%, -50%) rotate(var(--rot,0deg));
+      transition: transform 0.36s ease;
+      will-change: transform;
+      display:block;
+      border-radius: 12px;
+      background: transparent;
+    }
 
-    /* Hover: escalamos la caja (no cambiamos su posicion) y pausamos la animacion interna */
-    .corner:hover {
-      transform: scale(1.12);
+    .corner.small img {
+      width: var(--img-cover-small);
+      height: var(--img-cover-small);
+      border-radius: 10px;
+      transform: translate(-50%, -50%) rotate(var(--rot,0deg));
     }
-    .corner:hover .corner-inner {
-      animation-play-state: paused;     /* pausa float */
-      transform: rotate(0deg);          /* suaviza rotacion en hover */
-    }
+
+    .corner:hover { transform: scale(1.12); }
+    .corner:hover img { transform: translate(-50%, -50%) rotate(0deg) scale(1); }
 
     @keyframes floatInner {
-      0%,100% { transform: translateY(0) }
-      50% { transform: translateY(-8px) }
+      0%,100% { transform: translateY(0); }
+      50%     { transform: translateY(-8px); }
     }
 
-    /* Posiciones (la caja está fija; la rotación seteada en corner-inner inline) */
+    /* Posiciones */
     .top-left  { top: 30px; left: 40px; }
     .top-right { top: 30px; right: 40px; }
     .bottom-left { bottom: 30px; left: 40px; }
     .bottom-right { bottom: 30px; right: 40px; }
+    .mid-left { left: 40px; top: 50%; transform: translateY(-50%); }
+    .mid-right { right: 40px; top: 50%; transform: translateY(-50%); }
 
-    /* --- Confetti --- */
+    /* Confetti */
     .confetti {
       position: fixed;
-      top: -10px;
+      top: -45px;
       width: 10px;
       height: 14px;
       pointer-events: none;
@@ -136,7 +193,6 @@
       to { transform: translateY(110vh) rotate(360deg); opacity: 0; }
     }
 
-    /* --- Firework particle --- */
     .fw-p {
       position: absolute;
       width: 8px; height: 8px;
@@ -150,10 +206,9 @@
       to { transform: translate(var(--tx), var(--ty)) scale(1.05); opacity: 0; }
     }
 
-    /* --- Cake (imagen). Ajusta tamaño aquí si quieres --- */
     .cake {
       position: absolute;
-      width: 320px;          /* tamaño grande (puedes cambiar) */
+      width: 280px;
       height: auto;
       z-index: 9999;
       pointer-events: none;
@@ -162,59 +217,163 @@
       transition: top 0.35s ease, opacity 0.18s ease;
     }
 
+    .balloon {
+      position: fixed;
+      bottom: -100px;
+      width: 40px; height: 55px;
+      border-radius: 50%;
+      animation: floatUp 6s linear forwards;
+      z-index: 9997;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.25), inset -6px -8px 12px rgba(255,255,255,0.06);
+    }
+    @keyframes floatUp {
+      to { transform: translateY(-120vh); opacity:0; }
+    }
+
+    /* Sorpresa 2.0 oculto por defecto */
+    #surprise2 {
+      display:none;
+      margin-top:15px;
+      padding:10px 20px;
+      font-size:1em;
+      border:none;
+      border-radius:20px;
+      background:#70d6ff;
+      color:#061424;
+      text-decoration:none;
+      box-shadow:0px 6px 18px rgba(0,0,0,0.35);
+      transition: transform 0.18s ease-in-out, background 0.18s;
+      z-index:3;
+      font-weight:600;
+      display:inline-block;
+    }
+    #surprise2:hover { transform:scale(1.06); background:#9be3ff; }
+
+    @media (max-width:900px){
+      :root { --corner-size: 150px; --corner-small-size: 110px; --img-cover-large: 135%; --img-cover-small: 120%; }
+      h1 { font-size:2.4em; }
+      p { font-size:1.05em; max-width:520px; }
+      .cake { width: 220px; }
+    }
   </style>
 </head>
 <body>
   <div class="overlay">
     <h1>🎉 Feliiizzz Cumpleañooosss 🎉</h1>
-    <p>Ojalá disfrutes mucho este día tan especial y que este nuevo año llegue lleno de luz, sonrisas y momentos inolvidables. 🌸</p>
+    <p>Disfruta muchísimo este día tan especial y que este año esté lleno de luz y momentos inolvidables 🌸</p>
 
-    <button class="btn" id="musicBtn" onclick="handlePlay()">▶ Pincha acá para una sorpresa 🎂</button>
+    <button class="btn" id="musicBtn">▶ Pincha acá para una sorpresa 🎂</button>
+    <!-- oculto por defecto -->
+    <a id="surprise2" href="https://www.youtube.com/watch?v=TPYlbKNZPGg" target="_blank" style="display:none;" aria-hidden="true">✨ Sorpresa 2.0 ✨</a>
 
-    <!-- audio (misma ruta) -->
-    <audio id="song"><source src="assets/audio/cardigan.mp3" type="audio/mpeg"></audio>
+    <audio id="song" loop><source src="assets/audio/cardigan.mp3" type="audio/mpeg"></audio>
   </div>
 
-  <!-- esquinas: rotation moved to corner-inner style attribute -->
+  <!-- esquinas grandes -->
   <div class="corner top-left">
-    <div class="corner-inner" style="transform: rotate(-8deg);">
+    <div class="corner-inner" style="--rot:-8deg;">
       <img src="assets/img/juegoshambre.jpg" alt="Los juegos del hambre">
     </div>
   </div>
 
   <div class="corner top-right">
-    <div class="corner-inner" style="transform: rotate(6deg);">
+    <div class="corner-inner" style="--rot:6deg;">
       <img src="assets/img/folklore.webp" alt="Folklore">
     </div>
   </div>
 
   <div class="corner bottom-left">
-    <div class="corner-inner" style="transform: rotate(5deg);">
+    <div class="corner-inner" style="--rot:5deg;">
       <img src="assets/img/the100.jpg" alt="The 100">
     </div>
   </div>
 
   <div class="corner bottom-right">
-    <div class="corner-inner" style="transform: rotate(-6deg);">
+    <div class="corner-inner" style="--rot:-6deg;">
       <img src="assets/img/italia.webp" alt="Italia">
     </div>
   </div>
 
-  <!-- cake image file (sube assets/img/cake.png si no está) -->
-  <img id="cakeImg" class="cake" src="assets/img/cake.png" alt="Torta">
+  <!-- imágenes pequeñas adicionales -->
+  <div class="corner small mid-left">
+    <div class="corner-inner" style="--rot:4deg;">
+      <img src="assets/img/flor_rosada.png" alt="Flor lado izquierdo">
+    </div>
+  </div>
+
+  <div class="corner small mid-right">
+    <div class="corner-inner" style="--rot:-3deg;">
+      <img src="assets/img/flor_celeste.png" alt="Flor lado derecho">
+    </div>
+  </div>
+
+  <img id="cakeImg" class="cake" src="assets/img/cake.gif" alt="Torta">
 
   <script>
-    /* estado */
+    // Listener principal: escondemos sorpresa2 (por si el HTML/CSS fuera cacheado)
+    document.addEventListener('DOMContentLoaded', () => {
+      const surprise2 = document.getElementById('surprise2');
+      if (surprise2) {
+        surprise2.style.display = 'none';
+        surprise2.setAttribute('aria-hidden', 'true');
+      }
+
+      // conectar handler (evitamos doble conexión)
+      const btn = document.getElementById('musicBtn');
+      btn.addEventListener('click', handlePlay);
+
+      // hacemos un primer estabilizado ligero tras DOMContentLoaded
+      stabilizeLayout();
+    });
+
+    // También hacemos estabilizado al load (cuando imágenes ya cargaron)
+    window.addEventListener('load', () => {
+      // pequeño timeout para asegurar imagenes/render
+      setTimeout(stabilizeLayout, 80);
+    });
+
+    // fuerza un reflow y corrige contenedores que queden por encima del viewport
+    function stabilizeLayout(){
+      // forzar reflow
+      document.body.getBoundingClientRect();
+      // despachar resize para que algunos componentes recalculen
+      window.dispatchEvent(new Event('resize'));
+
+      // Si alguna esquina quedó con top < 6px (muy pegada o sobresaliendo), la empujamos hacia abajo suavemente
+      document.querySelectorAll('.corner').forEach(c => {
+        const rect = c.getBoundingClientRect();
+        // si el contenedor está parcialmente fuera (por arriba), ajustamos su top CSS
+        if (rect.top < 6) {
+          // intentar leer el top actual en px (si existe en CSS)
+          const cs = getComputedStyle(c);
+          let currentTop = cs.top ? parseFloat(cs.top) : NaN;
+          // si no existe top (ej: bottom utilizado), ignoramos
+          if (!isNaN(currentTop)) {
+            // empuja 8px hacia abajo como corrección segura
+            const newTop = Math.max(6, currentTop + 8);
+            c.style.top = newTop + 'px';
+          } else {
+            // fallback: si no tiene top, poner un top razonable
+            c.style.top = '30px';
+          }
+        }
+      });
+
+      // forzamos otro reflow final
+      document.body.offsetHeight;
+    }
+
     let isPlaying = false;
     let firstPlay = true;
 
-    // valores ajustables:
-    const CONFETTI_COUNT = 750;   // aumenta/ reduce para más o menos confeti
-    const CAKE_Y_OFFSET = 60;     // mueve la torta *más abajo* (+) o más arriba (-)
+    const CONFETTI_COUNT = 100;
+    const BALLOONS_COUNT = 80;
+    const CAKE_Y_OFFSET = 38;
 
     function handlePlay(){
       const song = document.getElementById('song');
       const btn = document.getElementById('musicBtn');
+      const surprise2 = document.getElementById('surprise2');
 
       if (!isPlaying) {
         song.play().catch(()=>{/* silent */});
@@ -224,7 +383,20 @@
         if (firstPlay) {
           launchConfetti(CONFETTI_COUNT);
           launchFireworks(3);
+          launchBalloons(BALLOONS_COUNT);
           dropCakeImage(CAKE_Y_OFFSET);
+          // mostramos el botón Sorpresa 2.0 SOLO después de presionar el botón principal
+          if (surprise2) {
+            surprise2.style.display = 'inline-block';
+            surprise2.setAttribute('aria-hidden', 'false');
+            // opcional: al hacer clic en sorpresa2, lo ocultamos para que no quede en pantalla
+            surprise2.addEventListener('click', () => {
+              setTimeout(()=> {
+                surprise2.style.display = 'none';
+                surprise2.setAttribute('aria-hidden', 'true');
+              }, 300);
+            }, { once: true });
+          }
           firstPlay = false;
         }
       } else {
@@ -234,7 +406,7 @@
       }
     }
 
-    /* Confetti (firstPlay only in handlePlay) */
+    /* Confetti */
     function launchConfetti(count=120) {
       for (let i=0;i<count;i++){
         const c = document.createElement('div');
@@ -246,11 +418,11 @@
         c.style.backgroundColor = `hsl(${Math.floor(Math.random()*360)}, 85%, 60%)`;
         c.style.setProperty('--dur', (2 + Math.random()*3) + 's');
         document.body.appendChild(c);
-        setTimeout(()=> c.remove(), 6500);
+        setTimeout(()=> c.remove(), 8000);
       }
     }
 
-    /* Fireworks (visual) */
+    /* Fireworks */
     function launchFireworks(rounds=2) {
       for (let r=0;r<rounds;r++){
         const centerX = (40 + Math.random()*20);
@@ -268,42 +440,49 @@
           p.style.background = `hsl(${Math.floor(Math.random()*360)},90%,60%)`;
           p.style.setProperty('--fw-dur', (500 + Math.random()*600) + 'ms');
           document.body.appendChild(p);
-          setTimeout(()=> p.remove(), 900);
+          setTimeout(()=> p.remove(), 1100);
         }
       }
     }
 
-    /* Drop cake image above the title.
-       cakeOffset: positive -> cake finishes lower (closer to title)
-    */
+    /* Globos */
+    function launchBalloons(count=10){
+      for(let i=0;i<count;i++){
+        const b=document.createElement('div');
+        b.className='balloon';
+        b.style.left=(Math.random()*85 + 7.5)+'vw';
+        b.style.background=`hsl(${Math.floor(Math.random()*360)},80%,60%)`;
+        b.style.animationDuration=(4+Math.random()*3)+'s';
+        b.style.width = (28 + Math.random()*36) + 'px';
+        b.style.height = (36 + Math.random()*46) + 'px';
+        document.body.appendChild(b);
+        setTimeout(()=>b.remove(),9000);
+      }
+    }
+
+    /* Drop cake image */
     function dropCakeImage(cakeOffset = 0) {
       const cake = document.getElementById('cakeImg');
       const title = document.querySelector('h1');
       if (!cake || !title) return;
 
-      // place off-screen first
       cake.style.opacity = '0';
-      cake.style.top = '-400px';
+      cake.style.top = '-420px';
       cake.style.left = '50%';
 
       requestAnimationFrame(() => {
         const titleRect = title.getBoundingClientRect();
         const cakeRect = cake.getBoundingClientRect();
-        // center x of title
-        const targetLeft = titleRect.left + titleRect.width/2 + window.scrollX;
-        // base formula: place cake so its bottom is 10px above title top
         let targetTop = window.scrollY + titleRect.top - cakeRect.height - 10;
-        // move cake a +cakeOffset px (positivo = más abajo)
         targetTop = targetTop + cakeOffset;
 
-        // set initial and animate drop + bounce
-        cake.style.left = targetLeft + 'px';
+        cake.style.left = "50%";
+        cake.style.transform = "translateX(-50%)";
         cake.style.opacity = '1';
         cake.style.transition = 'top 0.92s cubic-bezier(.2,.9,.2,1), opacity 0.12s';
         cake.style.top = (-380) + 'px';
 
         requestAnimationFrame(() => {
-          // land a bit low, then bounce
           cake.style.top = (targetTop + 30) + 'px';
           setTimeout(() => {
             cake.style.transition = 'top 0.16s ease';
